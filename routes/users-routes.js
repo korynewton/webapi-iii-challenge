@@ -9,8 +9,23 @@ router.get('/', async (req, res) => {
         const users = await Db.get()
         res.status(200).json(users)
     } catch {
-        res.status(500).json({message: "The search for users you had requested has failed"})
+        res.status(500).json({error: "The user information could not be retrieved."})
     }
 })
+
+router.get('/:id', async (req,res) => {
+    const { id } = req.params
+    try {
+        const user = await Db.getById(id)
+        if (!user) {
+            res.status(404).json({ error: "That user does not exist" })
+        } else {
+            res.status(200).json(user)
+        }
+    } catch {
+        res.status(500).json({ error: "There was an error in retrieving that user" })
+    }
+})
+
 
 module.exports = router;

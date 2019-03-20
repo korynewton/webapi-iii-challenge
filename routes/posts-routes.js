@@ -10,7 +10,21 @@ router.get('/', async (req, res) => {
         const users = await Db.get()
         res.status(200).json(users)
     } catch {
-        res.status(500).json({message: "The search for posts you had requested has failed"})
+        res.status(500).json({message: "The posts information could not be retrieved."})
+    }
+})
+
+router.get('/:id', async (req,res) => {
+    const { id } = req.params
+    try {
+        const post = await Db.getById(id)
+        if (!post) {
+            res.status(404).json({ error: "That post does not exist" })
+        } else {
+            res.status(200).json(post)
+        }
+    } catch {
+        res.status(500).json({ error: "There was an error in retrieving that post" })
     }
 })
 
