@@ -33,6 +33,23 @@ router.get('/:id', async (req,res) => {
     }
 })
 
+//delete post by db ID
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        const remove = await Db.remove(id)
+        console.log(remove)
+        if (!remove) {
+            res.status(404).json({ error : "post not found" })
+        } else {
+            res.status(200).json({ message: "post deleted" })
+        }
+    } catch {
+        res.status(500).json({ error: "error in deleting post" })
+    }
+})
+
+
 //add post to db by
 // router.post('/:id', async (req, res) => {
 //     const { id } = req.params
