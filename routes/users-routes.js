@@ -8,8 +8,12 @@ const Db = require('../data/helpers/userDb')
 
 //middleware:
 function capitalizeName(req, res, next) {
-    req.body.name = req.body.name.toUpperCase();
-    next();
+    if (!req.body.name) {
+        next();
+    } else {
+     req.body.name = req.body.name.toUpperCase();
+     next();
+    }
 }
 
 router.use(capitalizeName)
