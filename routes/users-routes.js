@@ -52,5 +52,22 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
+router.put('/:id', async (req, res) => {
+    const { id } = req.params;
+    const edits = req.body
+    try {
+        const updated = await Db.update(id, edits);
+        console.log(updated)
+        if (!updated) {
+            res.status(404).json({ error: "user not found" })
+        } else {
+            const updates = await Db.getById(id)
+            res.status(200).json(updates)
+        }
+    } catch {
+        res.status(500).json({ error: "Error in updating" })
+    }
+})
+
 
 module.exports = router;
