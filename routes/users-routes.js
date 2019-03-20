@@ -57,7 +57,6 @@ router.put('/:id', async (req, res) => {
     const edits = req.body
     try {
         const updated = await Db.update(id, edits);
-        console.log(updated)
         if (!updated) {
             res.status(404).json({ error: "user not found" })
         } else {
