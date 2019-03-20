@@ -6,6 +6,14 @@ router.use(express.json());
 
 const Db = require('../data/helpers/userDb') 
 
+//middleware:
+function capitalizeName(req, res, next) {
+    req.body.name = req.body.name.toUpperCase();
+    next();
+}
+
+router.use(capitalizeName)
+
 router.get('/', async (req, res) => {
     try {
         const users = await Db.get()
@@ -29,7 +37,7 @@ router.get('/:id', async (req,res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', capitalizeName, async (req, res) => {
     try {
         const userToAdd = await Db.insert(req.body)
         res.status(200).json(userToAdd)
@@ -52,7 +60,7 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', capitalizeName, async (req, res) => {
     const { id } = req.params;
     const edits = req.body
     try {
@@ -81,5 +89,6 @@ router.get('/usersPosts/:id', async (req, res) => {
         res.status(500).json({ error: "error in retrieving posts from user" })
     }
 })
+
 
 module.exports = router;
