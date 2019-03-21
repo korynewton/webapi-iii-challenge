@@ -1,8 +1,11 @@
 const express = require('express');
 
+const cors = require('cors')
+
 const router = express.Router()
 
 router.use(express.json());
+router.use(cors())
 
 const Db = require('../data/helpers/userDb') 
 
