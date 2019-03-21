@@ -1,14 +1,10 @@
 const express = require('express');
 
-const cors = require('cors')
-
 const usersRoutes = require('./routes/users-routes')
 const postsRoutes = require('./routes/posts-routes')
 
 
 const server = express();
-
-server.use(cors())
 
 
 //handle routing
